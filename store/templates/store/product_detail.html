@@ -1,0 +1,49 @@
+{% extends 'store/메인.html'%}
+{% load static %}
+{% block content %}
+<h3>제품명 : {{ product.name }}</h3>
+
+          
+<div class="card">
+	<div class="row">
+		<aside class="col-sm-5 border-right">
+      <article class="gallery-wrap"> 
+      <div class="img-big-wrap">
+        <div> <a href="#"><img src="{{ product.imageURL }}" class="img-fluid"></a></div>
+      </div>
+  
+      </article>
+          </aside>
+          <aside class="col-sm-7">
+      <article class="card-body p-5">
+        <h3 class="title mb-3">{{ product.name }}</h3>
+
+      <p class="price-detail-wrap"> 
+        <span class="price h3 text-warning"> 
+          <span class="currency">$</span><span class="num">{{ product.price }}</span>
+        </span> 
+      
+      </p> <!-- price-detail-wrap .// -->
+      <dl class="item-property">
+        <dt>제품설명</dt>
+        <dd><p>{{ product.description }} </p></dd>
+      </dl>
+      
+   
+        
+        <hr>
+        <button data-product={{product.id}} data-action="add" class="btn btn-success 장바구니업데이트">장바구니 담기</button>
+        
+      </article> <!-- card-body.// -->
+          </aside> <!-- col.// -->
+        </div> <!-- row.// -->
+      </div> <!-- card.// -->
+
+
+      </div>
+      <!--container.//-->
+      </article>
+        </div>
+
+
+{% endblock content %}

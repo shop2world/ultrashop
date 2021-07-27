@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+    <head>
+        <title>쇼핑</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- CSS only -->
+    
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        <link rel="stylesheet" type ="text/css" href="{% static 'css/main.css' %}">
+    
+        <script type ="text/javascript">
+            var user = '{{request.user}}'
+
+            function getToken(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+        const csrftoken = getToken('csrftoken');
+
+        function getCookie(name) {
+        // 쿠키 문자열을 분할하고 배열의 모든 개별 이름 = 값 쌍을 가져옵니다.
+            var cookieArr = document.cookie.split(";");
+
+            // 배열 요소를 통해 반복
+            for(var i = 0; i < cookieArr.length; i++) {
+                var cookiePair = cookieArr[i].split("=");
+
+                /* 쿠키 이름 시작 부분의 공백 제거 주어진 문자열과 비교 */
+                if(name == cookiePair[0].trim()) {
+                    // 쿠키 값을 디코딩하고 반환
+                    return decodeURIComponent(cookiePair[1]);
+                }
+            }
+
+                // 찾을 수없는 경우 null 반환
+                return null;
+        }
+
+		var cart = JSON.parse(getCookie('cart'))
+        if (cart == undefined) {
+            cart = {}
+            console.log('장바구니 쿠키 완성!')
+            document.cookie ='cart=' + JSON.stringify(cart) + ";domain=;path=/"
+        }
+
+
+
+        console.log('cart:', cart)
+
+        </script>
+
+        
+
+    
+    </head>
+    <body>
+
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        
+            <a class="navbar-brand" href="{% url 'store' %}">울트라 쇼핑몰</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'add_product' %}">재벌몰</a>
+                </li>
+                
+                
+                </ul>
+                <div class="form-inline my-2 my-lg-0">
+                    {% if user.is_authenticated %}
+                    <a href="{% url 'logout' %}" class="btn btn-danger">{{user.username}}님 로그아웃</a>
+                    {% else %} 
+                    <a href="{% url 'login' %}" class="btn btn-danger">로그인</a>
+                    <a href="{% url 'register' %}" class="btn btn-danger">가입</a>
+                    {% endif %}
+                    <a href ="{% url 'cart' %}">
+                        <img src="{% static 'images/shopping-cart-16.png'%}">
+                    </a>
+                    <b>{{cartItems}}</b></p>
+                </div>
+                
+            </div>
+        </nav>
+        <hr>
+        <div class="container">
+            <p>
+            {% block content %}
+
+            {% endblock content %}
+
+        </div>
+    
+       
+            <!-- JavaScript Bundle with Popper -->
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+        <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+        <script type="text/javascript" src="{% static 'js/cart.js'%}"></script>
+        
+    </body>
+</html>

@@ -1,0 +1,24 @@
+{% extends 'store/메인.html'%}
+{% load static %}
+{% block content %}
+
+<div class="row">
+    {% for product in products %}
+    <div class="col-lg-4">
+        <div class= "box">
+        <img width=100% src="{{product.imageURL}}">
+        <h6><strong>{{product.name}}</strong></h6>
+        {{product.description}}
+        <hr>
+        <button data-product={{product.id}} data-action="add" class="btn btn-success 장바구니업데이트">장바구니 담기</button>
+        <a href="product/{{product.pk}}" class="btn btn-success">보기</a>
+        <h4 style="display: inline-block; float: right"><strong>${{product.price|floatformat:2}}</strong></h4>
+				
+        </div>
+       
+    </div>
+    {% endfor %} 
+   
+  
+</div>
+{% endblock content %}

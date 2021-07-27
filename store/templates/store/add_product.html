@@ -1,0 +1,18 @@
+{% extends 'store/메인.html'%}
+{% load static %}
+{% block content %}
+<h3>나누면 재벌된다! 바자회 제품 등록!</h3>
+<div class="row">
+    <div class="col-lg-6">
+        <div class="box">
+            <form action="." method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button class="btn btn-primary">등록</button>
+            </form>
+        </div>
+       
+    </div>
+</div>
+
+{% endblock content %}
