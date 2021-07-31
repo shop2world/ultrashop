@@ -86,7 +86,7 @@ def checkout(request):
     return render(request, 'store/결제.html', context)
 
 class UpdatedItemView(View):
-    def get(self, request, *args, **kwargs):
+    def post(self, request, *args, **kwargs):
         data = json.loads(request.body)        
         productID = data['productID']
         action = data['action']        
