@@ -4,12 +4,13 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 class Customer(models.Model):
-    user = models.OneToOneField(User,null=True, blank=True, on_delete=models.CASCADE)
-    name = models.CharField(max_length=200, null=True)
-    email = models.CharField(max_length=200)
+    user = models.OneToOneField(
+        User, null=True, blank=True, on_delete=models.CASCADE)
+    name = models.CharField(max_length=200, blank=True, null=True)
+    email = models.CharField(max_length=200, blank=True, null=True)
 
     def __str__(self):
-        #return self.user.username
+        #return self.user.username에서 수정
         return self.name
 class Product(models.Model):
     name = models.CharField(max_length=200)
@@ -30,8 +31,9 @@ class Product(models.Model):
         return url        
 
 class Order(models.Model):
-    customer = models.ForeignKey(Customer, on_delete=models.SET_NULL, blank=True, null=True )
-    dated_ordered =models.DateTimeField(auto_now_add=True)
+    customer = models.ForeignKey(
+        Customer, on_delete=models.SET_NULL, blank=True, null=True)
+    dated_ordered = models.DateTimeField(auto_now_add=True)
     complete = models.BooleanField(default=False, null=True, blank=True)
     transation_id = models.CharField(max_length=200, null=True)
 
@@ -91,6 +93,7 @@ def create_or_update_customer(sender, instance, created, **kwargs):
     Create or update the customer
     """
     if created:
-        Customer.objects.create(user=instance)
-    # 이미 존재하는 user: 그냥 customer 저장
+    # Customer.objects.create(user=instance) 에서 시그날 수정   
+        Customer.objects.create(user=instance, name=instance.username)
+    # 이미 존재하는 user: 그냥 customer 저장 
     instance.customer.save()    

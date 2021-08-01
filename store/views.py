@@ -87,6 +87,7 @@ def checkout(request):
 
 class UpdatedItemView(View):
     def post(self, request, *args, **kwargs):
+        #get 방식으로 하면 장바구니에 물건이 안담김, 수정
         data = json.loads(request.body)        
         productID = data['productID']
         action = data['action']        
