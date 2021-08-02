@@ -10,6 +10,7 @@ from . 쿠키처리 import *
 from django.views.generic import CreateView, DetailView,TemplateView,View
 from django.contrib.auth.forms import UserCreationForm
 from .forms import ProductForm
+from .forms import CreateUserForm
 
 
 class StoreView(TemplateView):
@@ -186,7 +187,8 @@ def processOrder(request):
 #추가
 class RegistrationView(CreateView):
     template_name = "store/registration.html"
-    form_class = UserCreationForm
+    #form_class = UserCreationForm
+    form_class = CreateUserForm
     success_url = "/"
 
 class ProductDetailView(DetailView):

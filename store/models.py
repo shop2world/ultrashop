@@ -93,7 +93,7 @@ def create_or_update_customer(sender, instance, created, **kwargs):
     Create or update the customer
     """
     if created:
-    # Customer.objects.create(user=instance) 에서 시그날 수정   
-        Customer.objects.create(user=instance, name=instance.username)
+    # 기존 Customer.objects.create(user=instance) 에서 시그날 추가 - name, email   
+        Customer.objects.create(user=instance, name=instance.username,email=instance.email)
     # 이미 존재하는 user: 그냥 customer 저장 
     instance.customer.save()    

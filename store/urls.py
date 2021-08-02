@@ -8,8 +8,8 @@ urlpatterns = [
     #path('', views.store, name="store"),
     path('cart/', views.CartView.as_view(), name="cart"),
     #path('cart/', views.cart, name="cart"),
-    #path('checkout/', views.CheckoutView.as_view(), name="checkout"),
-    path('checkout/', views.checkout, name="checkout"),
+    path('checkout/', views.CheckoutView.as_view(), name="checkout"),
+    #path('checkout/', views.checkout, name="checkout"),
     path('update_item/', views.updatedItem, name="update_item"),
     path('process_order/', views.processOrder, name="process_order"),
     #추가
