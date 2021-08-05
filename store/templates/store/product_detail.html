@@ -33,8 +33,32 @@
         
         <hr>
         <button data-product={{product.id}} data-action="add" class="btn btn-success 장바구니업데이트">장바구니 담기</button>
-        
-      </article> <!-- card-body.// -->
+
+
+    <hr>
+    {% for comment in product.comments.all %}
+    <!-- #product.comments.all 에서 루핑// -->
+    {% if user.is_authenticated or comment.approved_comment %}
+    <div class="comment">
+        <div class="date">
+            {{ comment.created_date }}
+            {% if not comment.approved_comment %}
+                <a class="btn btn-default" href="{% url 'comment_remove' pk=comment.pk %}">💩</a>
+                <a class="btn btn-default" href="{% url 'comment_approve' pk=comment.pk %}">👌</a>
+            
+            {% endif %}
+        </div>
+        <strong>{{ comment.author }}</strong>
+        <p>{{ comment.text|linebreaks }}</p>
+    </div>
+    {% endif %}
+{% empty %}
+    <p>앙직 댓글이 없어요~~</p>
+{% endfor %}
+      <a class="btn btn-success" href="{% url 'add_comment_to_post' pk=product.pk %}">덧글추가</a>  
+
+
+          </article> <!-- card-body.// -->
           </aside> <!-- col.// -->
         </div> <!-- row.// -->
       </div> <!-- card.// -->

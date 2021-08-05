@@ -2,6 +2,8 @@ from django.urls import path
 from . import views
 #추가
 from django.contrib.auth import views as auth_views
+from django.conf.urls import url
+
 
 urlpatterns = [
     path('', views.StoreView.as_view(), name="store"),
@@ -10,7 +12,8 @@ urlpatterns = [
     #path('cart/', views.cart, name="cart"),
     path('checkout/', views.CheckoutView.as_view(), name="checkout"),
     #path('checkout/', views.checkout, name="checkout"),
-    path('update_item/', views.updatedItem, name="update_item"),
+    path('update_item/', views.UpdatedItemView.as_view(), name="update_item"),
+    #path('update_item/', views.updatedItem, name="update_item"),
     path('process_order/', views.processOrder, name="process_order"),
     #추가
     path('register/', views.RegistrationView.as_view(), name="register"),
@@ -18,4 +21,8 @@ urlpatterns = [
     path('logout/', auth_views.LogoutView.as_view(), name="logout"),
     path('product/<int:pk>/', views.ProductDetailView.as_view(), name="product_detail"),
     path('add-product/', views.ProductAddView.as_view(), name="add_product"),
+    #path('product/<int:pk>/comment/', views.add_comment_to_post, name="add_comment_to_post"),    
+    url(r'^product/(?P<pk>\d+)/comment/$', views.add_comment_to_post, name='add_comment_to_post'),
+    url(r'^comment/(?P<pk>\d+)/approve/$', views.comment_approve, name='comment_approve'),
+    url(r'^comment/(?P<pk>\d+)/remove/$', views.comment_remove, name='comment_remove'),    
 ]

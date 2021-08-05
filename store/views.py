@@ -9,8 +9,13 @@ from . 쿠키처리 import *
 #추가
 from django.views.generic import CreateView, DetailView,TemplateView,View
 from django.contrib.auth.forms import UserCreationForm
-from .forms import ProductForm
-from .forms import CreateUserForm
+from .forms import ProductForm,CreateUserForm,CommentForm
+from django.shortcuts import get_object_or_404
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import redirect
+from django.contrib import messages
+
+
 
 
 class StoreView(TemplateView):
@@ -208,4 +213,34 @@ class ProductAddView(CreateView):
     template_name = "store/add_product.html"
     success_url = "/"        
 
-    
+def add_comment_to_post(request, pk):
+    product = get_object_or_404(Product, pk=pk)
+    if request.method == "POST":
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.author = request.user
+            comment.product = product
+            comment.save()
+            return redirect('product_detail', pk=product.pk)
+    else:
+        form = CommentForm()
+    return render(request, 'store/add_comment_to_post.html', {'form': form})
+    #경로 주의 'add_comment_to_post.html' 아님 .212 참고 template_name = "store/add_product.html"
+    #from django.shortcuts import redirect => 아니면 name error 나옴
+
+@login_required
+def comment_approve(request, pk):
+    comment = get_object_or_404(Comment, pk=pk)
+    comment.approve()
+    return redirect('product_detail', pk=comment.product.pk)
+
+@login_required(login_url='common:login')
+def comment_remove(request, pk):
+    comment = get_object_or_404(Comment, pk=pk)
+    if request.user != comment.author:
+        messages.error(request, '댓글삭제권한이 없습니다')
+        return redirect('product_detail', pk=comment.product.pk)
+    else:    
+        comment.delete()
+    return redirect('product_detail', pk=comment.product.pk)
