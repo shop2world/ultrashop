@@ -238,9 +238,5 @@ def comment_approve(request, pk):
 @login_required(login_url='common:login')
 def comment_remove(request, pk):
     comment = get_object_or_404(Comment, pk=pk)
-    if request.user != comment.author:
-        messages.error(request, '댓글삭제권한이 없습니다')
-        return redirect('product_detail', pk=comment.product.pk)
-    else:    
-        comment.delete()
+    comment.delete()
     return redirect('product_detail', pk=comment.product.pk)
