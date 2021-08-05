@@ -104,7 +104,7 @@ def create_or_update_customer(sender, instance, created, **kwargs):
 
 class Comment(models.Model):
     product = models.ForeignKey(Product, related_name='comments', on_delete=models.CASCADE )
-    author = models.CharField(max_length=20)
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
     text = models.TextField()
     created_date = models.DateTimeField(default=timezone.now)
     approved_comment = models.BooleanField(default=False)

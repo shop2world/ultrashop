@@ -235,7 +235,7 @@ def comment_approve(request, pk):
     comment.approve()
     return redirect('product_detail', pk=comment.product.pk)
 
-@login_required(login_url='common:login')
+@login_required
 def comment_remove(request, pk):
     comment = get_object_or_404(Comment, pk=pk)
     comment.delete()
