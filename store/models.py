@@ -107,10 +107,11 @@ class Comment(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     text = models.TextField()
     created_date = models.DateTimeField(default=timezone.now)
-    approved_comment = models.BooleanField(default=False)
+    modify_date = models.DateTimeField(null=True, blank=True)
+    approved_comment = models.BooleanField(default=True)
 
     def approve(self):
-        self.approved_comment = True
+        self.approved_comment = False
         self.save()
 
     def __str__(self):

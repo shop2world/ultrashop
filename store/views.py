@@ -213,7 +213,7 @@ class ProductAddView(CreateView):
     template_name = "store/add_product.html"
     success_url = "/"        
 
-def add_comment_to_post(request, pk):
+def add_comment(request, pk):
     product = get_object_or_404(Product, pk=pk)
     if request.method == "POST":
         form = CommentForm(request.POST)
@@ -225,18 +225,47 @@ def add_comment_to_post(request, pk):
             return redirect('product_detail', pk=product.pk)
     else:
         form = CommentForm()
-    return render(request, 'store/add_comment_to_post.html', {'form': form})
+
+    return render(request, 'store/add_comment.html', {'form': form})
     #경로 주의 'add_comment_to_post.html' 아님 .212 참고 template_name = "store/add_product.html"
     #from django.shortcuts import redirect => 아니면 name error 나옴
+    #코드를 줄이기 위해 context 를 바로 넣음. 따라서 다음과 같이 쓸 수 있음
+    #context = {'form': form}
+    #return render(request, 'store/add_comment_to_post.html', context)
 
 @login_required
-def comment_approve(request, pk):
+def comment_modify(request, pk):
     comment = get_object_or_404(Comment, pk=pk)
-    comment.approve()
-    return redirect('product_detail', pk=comment.product.pk)
+    
+    if request.method == "POST":
+        form = CommentForm(request.POST, instance=comment)
+        if form.is_valid():
+            comment = form.save()
+            comment.modify_date = timezone.now()
+            comment.save()
+            return redirect('product_detail', pk=comment.product.pk)
+    else:
+        form = CommentForm(instance=comment)    
+    return render(request, 'store/add_comment.html', {'form': form})
+#댓글 수정 함수는 댓글 등록 함수와 같은 형태    
+
+
 
 @login_required
 def comment_remove(request, pk):
     comment = get_object_or_404(Comment, pk=pk)
     comment.delete()
     return redirect('product_detail', pk=comment.product.pk)
+
+
+# @login_required(login_url='common:login')
+# def comment_modify(request, pk):
+#     comment = get_object_or_404(Comment, pk=pk)
+#     form = CommentForm(request.POST, instance=comment)
+#     comment = form.save(commit=False)
+#     comment.modify_date = timezone.now()
+#     comment.save()
+#     return redirect('product_detail', pk=comment.product.pk)
+
+
+

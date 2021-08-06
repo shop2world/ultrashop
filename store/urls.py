@@ -21,8 +21,8 @@ urlpatterns = [
     path('logout/', auth_views.LogoutView.as_view(), name="logout"),
     path('product/<int:pk>/', views.ProductDetailView.as_view(), name="product_detail"),
     path('add-product/', views.ProductAddView.as_view(), name="add_product"),
-    #path('product/<int:pk>/comment/', views.add_comment_to_post, name="add_comment_to_post"),    
-    url(r'^product/(?P<pk>\d+)/comment/$', views.add_comment_to_post, name='add_comment_to_post'),
-    url(r'^comment/(?P<pk>\d+)/approve/$', views.comment_approve, name='comment_approve'),
-    url(r'^comment/(?P<pk>\d+)/remove/$', views.comment_remove, name='comment_remove'),    
+    path('product/<int:pk>/comment/', views.add_comment, name="add_comment"),     
+    path('product/<int:pk>/remove/', views.comment_remove, name="comment_remove"),   
+    path('product/<int:pk>/modify/', views.comment_modify, name='comment_modify'),
+    
 ]

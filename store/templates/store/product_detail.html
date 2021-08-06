@@ -42,21 +42,35 @@
     <div class="comment">
         <div class="date">
             {{ comment.created_date }}
+              {% if comment.modify_date %}
+              (수정:{{ comment.modify_date }})
+              {% endif %}
+              
             {% if not comment.approved_comment %}
                 <a class="btn btn-default" href="{% url 'comment_remove' pk=comment.pk %}">💩</a>
-                <a class="btn btn-default" href="{% url 'comment_approve' pk=comment.pk %}">👌</a>
+            {% endif %}
             
+            
+
+            {% if request.user == comment.author %}
+            <a href="{% url 'comment_modify' pk=comment.pk  %}" class="small">수정</a>,
+            <a href="{% url 'comment_remove' pk=comment.pk  %}" class="small">삭제</a>
             {% endif %}
         </div>
-        <strong>{{ comment.author }}</strong>
-        <p>{{ comment.text|linebreaks }}</p>
+        <strong>(🐺 :{{ comment.author }})</strong>
+        <p>✒️ :{{ comment.text|linebreaks }}</p>
     </div>
     {% endif %}
 {% empty %}
     <p>앙직 댓글이 없어요~~</p>
 {% endfor %}
-      <a class="btn btn-success" href="{% url 'add_comment_to_post' pk=product.pk %}">덧글추가</a>  
+{% if user.is_authenticated %}
+                    
+      <a class="btn btn-success" href="{% url 'add_comment' pk=product.pk %}">댓글추가</a>  
 
+{% else %} 
+<a href="{% url 'login' %}" class="btn btn-danger">로그인 후 댓글 달기</a>
+{% endif %}
 
           </article> <!-- card-body.// -->
           </aside> <!-- col.// -->
