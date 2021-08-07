@@ -71,6 +71,7 @@ class OrderItem(models.Model):
     order = models.ForeignKey(Order, on_delete=models.SET_NULL, blank=True, null=True )        
     quantity = models.IntegerField(default=0, null=True,blank=True)
     dated_added = models.DateTimeField(auto_now_add=True)
+    
 
     @property
     def get_total(self):
@@ -86,11 +87,11 @@ class ShippingAdress(models.Model):
     zipcode = models.CharField(max_length=200, null=True)
     dated_added =models.DateTimeField(auto_now_add=True)
 
-"""
-def __str__(self):
-        return self.adress
-불필요. 짧은 코드가 좋은 코드        
-"""        
+    
+    def __str__(self):
+            return self.address
+            #스팰링 수정 adress ㅠㅠ
+        
 
 @receiver(post_save,sender=User)
 def create_or_update_customer(sender, instance, created, **kwargs):
