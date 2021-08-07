@@ -11,7 +11,7 @@ class Customer(models.Model):
     email = models.CharField(max_length=200, blank=True, null=True)
 
     def __str__(self):
-        #return self.user.username
+        #return self.user.username 아님
         return self.name
 class Product(models.Model):
     name = models.CharField(max_length=200)
@@ -86,9 +86,11 @@ class ShippingAdress(models.Model):
     zipcode = models.CharField(max_length=200, null=True)
     dated_added =models.DateTimeField(auto_now_add=True)
 
+"""
 def __str__(self):
         return self.adress
-
+불필요. 짧은 코드가 좋은 코드        
+"""        
 
 @receiver(post_save,sender=User)
 def create_or_update_customer(sender, instance, created, **kwargs):
@@ -110,9 +112,6 @@ class Comment(models.Model):
     modify_date = models.DateTimeField(null=True, blank=True)
     approved_comment = models.BooleanField(default=True)
 
-    def approve(self):
-        self.approved_comment = False
-        self.save()
-
-    def __str__(self):
-        return self.text
+    
+    def __str__(self): 
+        return self.text    

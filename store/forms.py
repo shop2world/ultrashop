@@ -25,6 +25,8 @@ class CreateUserForm(UserCreationForm):
             user.save()
         return user         
 
+
+#모델 폼을 사용. 모델과 필드만 정해주면 자동으로 form이 작동
 class CommentForm(forms.ModelForm):
 
     class Meta:

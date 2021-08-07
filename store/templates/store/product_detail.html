@@ -36,11 +36,13 @@
 
 
     <hr>
-    {% for comment in product.comments.all %}
+  {% for comment in product.comments.all %}
     <!-- #product.comments.all 에서 루핑// -->
     {% if user.is_authenticated or comment.approved_comment %}
+    <!-- 인증이 안되면 승인된 댓글은 보이나 스팸 댓글 지우는 행위에 참가 할 수 없게하기 위해 -->
+    
     <div class="comment">
-        <div class="date">
+        <div class="editcomment">
             {{ comment.created_date }}
               {% if comment.modify_date %}
               (수정:{{ comment.modify_date }})
@@ -61,7 +63,7 @@
         <p>✒️ :{{ comment.text|linebreaks }}</p>
     </div>
     {% endif %}
-{% empty %}
+  {% empty %} 
     <p>앙직 댓글이 없어요~~</p>
 {% endfor %}
 {% if user.is_authenticated %}

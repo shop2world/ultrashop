@@ -189,7 +189,6 @@ def processOrder(request):
     return JsonResponse('Payment Completed!', safe =False) 
 
 
-#추가
 class RegistrationView(CreateView):
     template_name = "store/registration.html"
     #form_class = UserCreationForm
@@ -258,14 +257,6 @@ def comment_remove(request, pk):
     return redirect('product_detail', pk=comment.product.pk)
 
 
-# @login_required(login_url='common:login')
-# def comment_modify(request, pk):
-#     comment = get_object_or_404(Comment, pk=pk)
-#     form = CommentForm(request.POST, instance=comment)
-#     comment = form.save(commit=False)
-#     comment.modify_date = timezone.now()
-#     comment.save()
-#     return redirect('product_detail', pk=comment.product.pk)
 
 
 
