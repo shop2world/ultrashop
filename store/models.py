@@ -13,6 +13,7 @@ class Customer(models.Model):
     def __str__(self):
         #return self.user.username 아님
         return self.name
+
 class Product(models.Model):
     name = models.CharField(max_length=200)
     description = models.CharField(max_length=200)
@@ -31,7 +32,29 @@ class Product(models.Model):
             url = ''
         return url        
 
+@receiver(post_save,sender=User)
+def create_or_update_customer(sender, instance, created, **kwargs):
+    """
+    Create or update the customer
+    """
+    if created:
+        # 기존 Customer.objects.create(user=instance) 에서 시그날 추가 - name, email        
+        Customer.objects.create(user=instance,name=instance.username,email=instance.email)
+    # 이미 존재하는 user: 그냥 customer 저장 
+    instance.customer.save()    
 
+
+class Comment(models.Model):
+    product = models.ForeignKey(Product, related_name='comments', on_delete=models.CASCADE )
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    text = models.TextField()
+    created_date = models.DateTimeField(default=timezone.now)
+    modify_date = models.DateTimeField(null=True, blank=True)
+    approved_comment = models.BooleanField(default=True)
+
+    
+    def __str__(self): 
+        return self.text    
 
 class Order(models.Model):
     customer = models.ForeignKey(
@@ -93,26 +116,4 @@ class ShippingAdress(models.Model):
             #스팰링 수정 adress ㅠㅠ
         
 
-@receiver(post_save,sender=User)
-def create_or_update_customer(sender, instance, created, **kwargs):
-    """
-    Create or update the customer
-    """
-    if created:
-        # 기존 Customer.objects.create(user=instance) 에서 시그날 추가 - name, email        
-        Customer.objects.create(user=instance,name=instance.username,email=instance.email)
-    # 이미 존재하는 user: 그냥 customer 저장 
-    instance.customer.save()    
 
-
-class Comment(models.Model):
-    product = models.ForeignKey(Product, related_name='comments', on_delete=models.CASCADE )
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
-    text = models.TextField()
-    created_date = models.DateTimeField(default=timezone.now)
-    modify_date = models.DateTimeField(null=True, blank=True)
-    approved_comment = models.BooleanField(default=True)
-
-    
-    def __str__(self): 
-        return self.text    
