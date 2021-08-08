@@ -9,6 +9,13 @@ class ProductForm(forms.ModelForm):
     class Meta:
         model = Product
         fields = '__all__'
+        labels = {
+            'name': '성함',
+            'description': '제품설명',
+            'price': '가격',
+            'digital': '디지탈제품',
+            'image': '상품이미지',
+        }
 
 
 class CreateUserForm(UserCreationForm):
