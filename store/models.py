@@ -14,13 +14,15 @@ class Customer(models.Model):
         #return self.user.username 아님
         return self.name
 
+      
+
 class Product(models.Model):
     name = models.CharField(max_length=200)
     description = models.CharField(max_length=200)
     price = models.FloatField()
     digital = models.BooleanField(default=False, null=True, blank=True)
     image = models.ImageField(null=True, blank=True)
-
+    
     def __str__(self):
         return self.name
 

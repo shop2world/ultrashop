@@ -1,0 +1,22 @@
+{% extends 'store/메인.html'%}
+{% load static %}
+{% block content %}
+<h3>검색결과 출력 - 검색어 : <b>"{{ query }}"</b></h3>
+
+    {% for product in products %}
+        <!-- 부트스트랩 카드 사용 https://getbootstrap.com/docs/4.3/components/card/ -->
+        <div class="card" style="width: 18rem;">
+    
+            <a href="../product/{{product.pk}}"><img class="card-img-top" src="{{product.imageURL}}"></a>
+            <div class="card-body">
+            <h4 class="card-text">{{product.name}}</h4>
+            <p class="card-text">${{product.price}}</p>
+            </div>
+        </div>    
+
+        
+        {% empty %}
+           <h4>결과 없음</h4>
+    {% endfor %}
+
+{% endblock content %}

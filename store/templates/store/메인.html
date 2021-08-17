@@ -96,6 +96,11 @@
                 </div>
                 
             </div>
+        <!-- 부트스트랩 폼 디자인 참고 https://getbootstrap.com/docs/4.0/components/navbar/#forms -->    
+        <form class="form-inline" action="{% url 'search:searchResult' %}" method="get">
+            <input class="form-control mr-sm-2" type="search" placeholder="검색" name="kw">
+            
+        </form>
         </nav>
         <hr>
         <div class="container">
