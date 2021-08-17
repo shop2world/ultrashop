@@ -159,6 +159,9 @@ https://developer.paypal.com/developer/applications/
 예를 들어 상품 댓글을 레고처럼 추가하시고 싶으신 분은
 다음의 강의를 참고하시면 됩니다.
 [장고 댓글 만들기](https://youtu.be/4ydUqjSB6yw)
+마찬가지로 검색기능을 추가하고 싶으면 다음의 강의를 참고하시면 됩니다.
+[장고 검색 만들기](https://youtu.be/BeyCNjG-vUU)
+
 
 주요 기능과 특징
 -------------
