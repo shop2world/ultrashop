@@ -22,7 +22,9 @@
 
 초보자도 쉽게 설치하는 설치가이드 =>
 샵투월드 한국형 오픈 소스 초간단 울트라쇼핑몰 - 무료 웹호스팅 이용 쇼핑몰 운영하기
-[누구나 가지는 무료 호스팅 장고 쇼핑몰 따라 만들기(유튜브)](https://youtu.be/2C0HY57eIac)
+
+[유튜브 강의로 따라만들기](https://youtu.be/2C0HY57eIac)
+
 
 [결과물: 울트라 쇼핑몰](https://shop2world.pythonanywhere.com/)
 
